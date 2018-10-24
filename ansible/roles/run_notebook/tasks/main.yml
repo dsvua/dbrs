@@ -1,0 +1,21 @@
+---
+
+- name: jupiter container
+  docker:
+    name: jupiter
+    image: jupyter/datascience-notebook:latest
+    state: reloaded
+    ports:
+    - "8888:8888"
+    cap_drop: all
+    cap_add:
+    - setgid
+    - setuid
+    pull: always
+    restart_policy: on-failure
+    restart_policy_retry: 3
+    volumes:
+    - /opt/serhiy/dbrs/notebook:/home/jovyan/work:rw
+  tags:
+  - docker_container
+  - jupiter
