@@ -48,12 +48,12 @@ resource "aws_security_group" "allow_8888" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  ingress {
-    from_port   = 0
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["24.191.208.31/32"]
-  }
+//  ingress {
+//    from_port   = 0
+//    to_port     = 22
+//    protocol    = "tcp"
+//    cidr_blocks = ["24.191.208.31/32"]
+//  }
 
   egress {
     from_port = 0
