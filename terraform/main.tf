@@ -14,30 +14,42 @@ resource "aws_iam_policy" "serhiy_ec2" {
 {
   "Version": "2012-10-17",
   "Statement": [
-    {
-      "Sid": "Stmt1540365557121",
-      "Action": [
-        "ec2:RunInstances",
-        "ec2:Describe*",
-        "ec2:TerminateInstances",
-        "ec2:AuthorizeSecurityGroupEgress",
-        "ec2:AuthorizeSecurityGroupIngress",
-        "ec2:DeleteSecurityGroup",
-        "ec2:RevokeSecurityGroupEgress",
-        "ec2:RevokeSecurityGroupIngress",
-        "ec2:DescribeSecurityGroups",
-        "ec2:DescribeSecurityGroupReferences",
-        "ec2:DescribeStaleSecurityGroups",
-        "ec2:DescribeVpcs",
-        "ec2:CreateNatGateway",
-        "ec2:CreateRoute",
-        "ec2:CreateSubnet",
-        "ec2:CreateVpc",
-        "ec2:*"
-      ],
-      "Effect": "Allow",
-      "Resource": "*"
-    }
+       {
+            "Action": "ec2:*",
+            "Effect": "Allow",
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": "elasticloadbalancing:*",
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": "cloudwatch:*",
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": "autoscaling:*",
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": "iam:CreateServiceLinkedRole",
+            "Resource": "*",
+            "Condition": {
+                "StringEquals": {
+                    "iam:AWSServiceName": [
+                        "autoscaling.amazonaws.com",
+                        "ec2scheduled.amazonaws.com",
+                        "elasticloadbalancing.amazonaws.com",
+                        "spot.amazonaws.com",
+                        "spotfleet.amazonaws.com"
+                    ]
+                }
+            }
+        }
   ]
 }
 EOF

@@ -1,8 +1,10 @@
 resource "aws_vpc" "serhiy" {
+  depends_on = ["aws_iam_user_policy_attachment.serhiy-attach", "aws_iam_policy.serhiy_ec2"]
   cidr_block = "10.0.0.0/16"
 }
 
 resource "aws_subnet" "serhiy" {
+  depends_on = ["aws_iam_user_policy_attachment.serhiy-attach", "aws_iam_policy.serhiy_ec2"]
   vpc_id     = "${aws_vpc.serhiy.id}"
   cidr_block = "10.0.1.0/24"
   map_public_ip_on_launch = true
@@ -20,26 +22,36 @@ resource "aws_internet_gateway" "serhiy" {
 }
 
 resource "aws_route" "serhiy" {
+  depends_on = ["aws_iam_user_policy_attachment.serhiy-attach", "aws_iam_policy.serhiy_ec2"]
   route_table_id         = "${aws_vpc.serhiy.main_route_table_id}"
   destination_cidr_block = "0.0.0.0/0"
   gateway_id             = "${aws_internet_gateway.serhiy.id}"
 }
 
-resource "aws_route_table_association" "public_subnet_eu_west_1a_association" {
+resource "aws_route_table_association" "serhiy" {
+  depends_on = ["aws_iam_user_policy_attachment.serhiy-attach", "aws_iam_policy.serhiy_ec2"]
   subnet_id = "${aws_subnet.serhiy.id}"
   route_table_id = "${aws_vpc.serhiy.main_route_table_id}"
 }
 
 resource "aws_security_group" "allow_8888" {
+  depends_on = ["aws_iam_user_policy_attachment.serhiy-attach", "aws_iam_policy.serhiy_ec2"]
   name        = "allow_8888"
   description = "Allow inbound traffic on port 8888"
   vpc_id      = "${aws_vpc.serhiy.id}"
 
   ingress {
-    from_port   = 0
+    from_port   = 8888
     to_port     = 8888
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 0
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["24.191.208.31/32"]
   }
 
   egress {
