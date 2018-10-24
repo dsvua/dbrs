@@ -12,3 +12,4 @@
     restart_retries: 3
     volumes:
     - /opt/serhiy/dbrs/notebook:/home/jovyan/work:rw
+    - /opt/serhiy/dbrs/ansible/jupyter_notebook_config.py:/home/jovyan/.jupyter/jupyter_notebook_config.py:ro

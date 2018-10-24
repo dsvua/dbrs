@@ -60,3 +60,9 @@ resource "aws_iam_user_policy_attachment" "serhiy-attach" {
   policy_arn = "${aws_iam_policy.serhiy_ec2.arn}"
 }
 
+resource "null_resource" "iam_delay" {
+  depends_on = ["aws_iam_user_policy_attachment.serhiy-attach", "aws_iam_policy.serhiy_ec2"]
+  provisioner "local-exec" {
+    command = "sleep 4"
+  }
+}
