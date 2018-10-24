@@ -1,2 +1,2 @@
 c.NotebookApp.token = u''
-c.NotebookApp.password = '0493R34980'
+c.NotebookApp.password = u''
