@@ -3,7 +3,7 @@ output "jupyter_url" {
 }
 
 output "warning" {
-  value = "It takes some time to configure server and downloade container image\nPlease be patient."
+  value = "It takes some time to configure server and download container image\nPlease be patient."
 }
 
 //output "password" {
